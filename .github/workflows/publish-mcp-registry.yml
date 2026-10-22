@@ -24,7 +24,23 @@ jobs:
           tar -xzf publisher.tar.gz mcp-publisher
       - name: Validate metadata
         run: ./mcp-publisher validate
+      - name: Check published version
+        id: existing
+        run: |
+          status=$(curl --silent --show-error --retry 2 --max-time 30 --output registry.json --write-out '%{http_code}' 'https://registry.modelcontextprotocol.io/v0.1/servers/io.github.Vomo-ai%2Fvomo/versions/1.0.0')
+          case "$status" in
+            200) echo 'published=true' >> "$GITHUB_OUTPUT" ;;
+            404) echo 'published=false' >> "$GITHUB_OUTPUT" ;;
+            *) echo "Unexpected registry status: $status"; exit 1 ;;
+          esac
       - name: Authenticate with repository identity
+        if: steps.existing.outputs.published == 'false'
         run: ./mcp-publisher login github-oidc
       - name: Publish metadata
+        if: steps.existing.outputs.published == 'false'
         run: ./mcp-publisher publish
+      - name: Verify public registry entry
+        run: |
+          curl --fail --silent --show-error --retry 2 --max-time 30 'https://registry.modelcontextprotocol.io/v0.1/servers/io.github.Vomo-ai%2Fvomo/versions/1.0.0' -o registry.json
+          jq -e '.server.name == "io.github.Vomo-ai/vomo" and .server.version == "1.0.0" and .server.remotes[0].url == "https://mcp.vomo.ai/mcp"' registry.json
+          cat registry.json
