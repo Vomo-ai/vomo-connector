@@ -1,0 +1,15 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.Vomo-ai/vomo",
+  "title": "VOMO",
+  "description": "Find and read your VOMO meeting notes and transcripts. OAuth sign-in; read-only access.",
+  "repository": {
+    "url": "https://github.com/Vomo-ai/vomo-connector",
+    "source": "github"
+  },
+  "websiteUrl": "https://vomo.ai/cli",
+  "version": "1.0.0",
+  "remotes": [
+    { "type": "streamable-http", "url": "https://mcp.vomo.ai/mcp" }
+  ]
+}
