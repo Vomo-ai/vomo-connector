@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "vomo",
+  "version": "0.1.0",
+  "description": "Search and read your VOMO meeting notes and original transcripts.",
+  "author": {
+    "name": "EverGrow Tech Inc.",
+    "email": "support@vomo.ai",
+    "url": "https://vomo.ai"
+  },
+  "homepage": "https://vomo.ai/cli",
+  "keywords": [
+    "meeting notes",
+    "transcripts",
+    "productivity"
+  ],
+  "repository": "https://github.com/Vomo-ai/vomo-connector",
+  "license": "MIT"
+}
